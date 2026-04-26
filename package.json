@@ -1,0 +1,78 @@
+{
+  "name": "easyhook",
+  "version": "0.1.0",
+  "description": "An Electron IDE for writing, organizing, and running Frida scripts without Python glue code.",
+  "main": "src/main/main.js",
+  "type": "commonjs",
+  "license": "MIT",
+  "author": "",
+  "homepage": "https://github.com/RytterMohn/EasyHook#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RytterMohn/EasyHook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RytterMohn/EasyHook/issues"
+  },
+  "keywords": [
+    "electron",
+    "frida",
+    "hook",
+    "reverse-engineering",
+    "instrumentation",
+    "ide"
+  ],
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "check": "node scripts/check-js.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "frida": "^17.3.0"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "dev.easyhook.ide",
+    "productName": "EasyHook",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "examples/**/*",
+      "package.json",
+      "README.md",
+      "README.en.md",
+      "README.zh-CN.md",
+      "LICENSE"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Development"
+    }
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

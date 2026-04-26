@@ -1,0 +1,17 @@
+node_modules/
+release/
+dist/
+out/
+coverage/
+.env
+.env.*
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/
+!.vscode/extensions.json
