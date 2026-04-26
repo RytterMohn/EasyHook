@@ -1,11 +1,12 @@
 <div align="center">
   <h1>EasyHook</h1>
   <p>Windows 桌面端 Android Frida 脚本 IDE。</p>
-
-  <p>
-    <a href="README.md">English</a> | 简体中文
+  <p align="center">
+  <img alt="EasyHook interface overview" src="docs/assets/cover.png" width="900">
   </p>
-
+  <p>
+    <a href="README.md">English</a>
+  </p>
   <p>
     <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg"></a>
     <img alt="Platform" src="https://img.shields.io/badge/platform-Windows%20%2B%20Android-blue.svg">
@@ -15,6 +16,7 @@
   </p>
 </div>
 
+
 EasyHook 是一个面向 Android Frida 脚本的 Electron IDE。它运行在 Windows 桌面上，通过 USB/tether Frida device 连接 Android 手机或模拟器，把脚本管理、代码编辑、Android 设备/进程选择、attach/spawn、运行和日志输出放在同一个桌面应用里。
 
 目标是减少“写一段 Frida 脚本还要再写 Python 启动器”的重复工作。
@@ -22,12 +24,8 @@ EasyHook 是一个面向 Android Frida 脚本的 Electron IDE。它运行在 Win
 ## 截图
 
 <p align="center">
-  <img alt="EasyHook interface overview" src="docs/assets/easyhook-interface-overview.svg" width="900">
+  <img alt="EasyHook interface overview" src="docs/assets/overview.png" width="900">
 </p>
-
-真实截图完成后，可以放到 `docs/assets/easyhook-main.png`，再替换本节图片。
-
-建议截图里包含这些内容：
 
 - 左侧：脚本库和搜索框
 - 中间：Frida 脚本编辑器

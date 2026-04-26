@@ -1,11 +1,12 @@
 <div align="center">
   <h1>EasyHook</h1>
   <p>Android Frida IDE for Windows desktop users.</p>
-
+  <p align="center">
+  <img alt="EasyHook interface overview" src="docs/assets/cover.png" width="900">
+  </p>
   <p>
     <a href="README.zh-CN.md">简体中文</a>
   </p>
-
   <p>
     <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg"></a>
     <img alt="Platform" src="https://img.shields.io/badge/platform-Windows%20%2B%20Android-blue.svg">
@@ -22,12 +23,8 @@ It removes the repeated work of writing a Python launcher every time you want to
 ## Screenshot
 
 <p align="center">
-  <img alt="EasyHook interface overview" src="docs/assets/easyhook-interface-overview.svg" width="900">
+  <img alt="EasyHook interface overview" src="docs/assets/overview.png" width="900">
 </p>
-
-After taking a real screenshot, place it at `docs/assets/easyhook-main.png` and use it in this section.
-
-Recommended screenshot content:
 
 - Left: script library and search
 - Center: Frida script editor

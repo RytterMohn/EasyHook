@@ -1,15 +1,15 @@
 # Assets
 
-Current overview image:
+Current cover image:
 
 ```text
-docs/assets/easyhook-interface-overview.svg
+docs/assets/cover.png
 ```
 
-Recommended real screenshot path:
+Current interface screenshot:
 
 ```text
-docs/assets/easyhook-main.png
+docs/assets/overview.png
 ```
 
 Use a full EasyHook window screenshot that shows the script library, editor, Android target panel, run controls, and console.
