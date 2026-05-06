@@ -9,6 +9,8 @@
   </p>
   <p>
     <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg"></a>
+    <a href="https://github.com/RytterMohn/EasyHook/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/RytterMohn/EasyHook?style=flat&logo=github&label=Stars&color=181717"></a>
+    <a href="https://github.com/RytterMohn/EasyHook/network/members"><img alt="GitHub forks" src="https://img.shields.io/github/forks/RytterMohn/EasyHook?style=flat&logo=github&label=Forks&color=181717"></a>
     <img alt="Platform" src="https://img.shields.io/badge/platform-Windows%20%2B%20Android-blue.svg">
     <img alt="Electron" src="https://img.shields.io/badge/Electron-38-47848F.svg">
     <img alt="Frida" src="https://img.shields.io/badge/Frida-17.3.0-orange.svg">

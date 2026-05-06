@@ -2,6 +2,148 @@
 
 const api = window.easyhook;
 const ANDROID_DEVICE_TYPES = new Set(['usb', 'tether']);
+const DEFAULT_LANGUAGE = 'en';
+
+const translations = {
+  en: {
+    'language.button': '中文',
+    'language.buttonTitle': 'Switch to Chinese',
+    'status.idle': 'Idle',
+    'status.modified': 'Modified',
+    'status.running': 'Running',
+    'common.loading': 'Loading...',
+    'common.refresh': 'Refresh',
+    'common.unknown': 'unknown',
+    'toolbar.new': 'New',
+    'toolbar.open': 'Open',
+    'toolbar.folder': 'Folder',
+    'toolbar.save': 'Save',
+    'toolbar.saveAs': 'Save As',
+    'sidebar.scripts': 'Scripts',
+    'sidebar.refreshTitle': 'Refresh scripts',
+    'sidebar.searchPlaceholder': 'Search scripts',
+    'sidebar.noFolder': 'No folder selected',
+    'sidebar.noScripts': 'No scripts found.',
+    'sidebar.openFolder': 'Open a folder to load scripts.',
+    'editor.untitled': 'Untitled',
+    'editor.unsaved': 'Unsaved script',
+    'editor.meta': '{lines} lines / {bytes}',
+    'target.title': 'Target',
+    'target.androidDevice': 'Android device',
+    'target.initialHint': 'Connect an Android device, start frida-server, then click Refresh.',
+    'target.mode': 'Mode',
+    'target.attach': 'Attach',
+    'target.spawn': 'Spawn',
+    'target.process': 'Running Android process',
+    'target.processPlaceholder': 'Filter package or PID',
+    'target.package': 'Android package',
+    'target.apps': 'Installed apps',
+    'target.appsPlaceholder': 'Filter installed apps',
+    'target.runtime': 'Runtime',
+    'target.defaultRuntime': 'Default',
+    'run.run': 'Run',
+    'run.stop': 'Stop',
+    'console.title': 'Console',
+    'console.clear': 'Clear',
+    'console.post': 'Post',
+    'devices.none': 'No Android USB device found',
+    'devices.noneHint': 'No Android USB/tether device found. Start frida-server on the phone, confirm adb authorization, then click Refresh.',
+    'devices.readyHint': 'Android device selected. Attach to a running package or spawn an installed package.',
+    'processes.none': 'No processes',
+    'processes.connectFirst': 'Connect an Android device first',
+    'processes.noMatching': 'No matching processes',
+    'apps.none': 'No apps available',
+    'apps.connectFirst': 'Connect an Android device first',
+    'apps.noMatching': 'No matching apps',
+    'log.ready': 'EasyHook is ready.',
+    'log.runningTarget': 'Running {mode} target: {target}',
+    'log.fridaStopped': 'Frida session stopped.',
+    'log.fridaDetached': 'Frida session detached: {reason}',
+    'log.createdScript': 'Created a new unsaved script.',
+    'log.loadedScripts': 'Loaded {count} script(s).',
+    'log.refreshedScripts': 'Refreshed {count} script(s).',
+    'log.savedScript': 'Saved {name}.',
+    'log.openedScript': 'Opened {name}.',
+    'log.devicesLoadError': 'Unable to load Frida devices. Run npm install and check Frida setup.',
+    'log.processesLoadError': 'Unable to load process list for the selected device.',
+    'log.appsLoadError': 'Unable to load installed Android apps from the selected device.',
+    'log.connectDeviceFirst': 'Connect and select an Android USB device first.',
+    'log.emptySpawnTarget': 'Spawn target is empty.',
+    'log.emptyAttachTarget': 'Select a process first.',
+    'log.posted': 'Posted: {payload}',
+    'log.unknownError': 'Unknown error.',
+    'log.fridaScriptError': 'Frida script error'
+  },
+  zh: {
+    'language.button': 'English',
+    'language.buttonTitle': 'Switch to English',
+    'status.idle': '空闲',
+    'status.modified': '已修改',
+    'status.running': '运行中',
+    'common.loading': '加载中...',
+    'common.refresh': '刷新',
+    'common.unknown': '未知',
+    'toolbar.new': '新建',
+    'toolbar.open': '打开',
+    'toolbar.folder': '文件夹',
+    'toolbar.save': '保存',
+    'toolbar.saveAs': '另存为',
+    'sidebar.scripts': '脚本',
+    'sidebar.refreshTitle': '刷新脚本',
+    'sidebar.searchPlaceholder': '搜索脚本',
+    'sidebar.noFolder': '未选择文件夹',
+    'sidebar.noScripts': '未找到脚本。',
+    'sidebar.openFolder': '打开文件夹以加载脚本。',
+    'editor.untitled': '未命名',
+    'editor.unsaved': '未保存脚本',
+    'editor.meta': '{lines} 行 / {bytes}',
+    'target.title': '目标',
+    'target.androidDevice': 'Android 设备',
+    'target.initialHint': '连接 Android 设备，启动 frida-server，然后点击刷新。',
+    'target.mode': '模式',
+    'target.attach': '附加',
+    'target.spawn': '启动',
+    'target.process': '运行中的 Android 进程',
+    'target.processPlaceholder': '按包名或 PID 过滤',
+    'target.package': 'Android 包名',
+    'target.apps': '已安装应用',
+    'target.appsPlaceholder': '过滤已安装应用',
+    'target.runtime': '运行时',
+    'target.defaultRuntime': '默认',
+    'run.run': '运行',
+    'run.stop': '停止',
+    'console.title': '控制台',
+    'console.clear': '清空',
+    'console.post': '发送',
+    'devices.none': '未找到 Android USB 设备',
+    'devices.noneHint': '未找到 Android USB/tether 设备。请在手机上启动 frida-server，确认 adb 授权，然后点击刷新。',
+    'devices.readyHint': '已选择 Android 设备。可以附加到运行中的包，或启动已安装包。',
+    'processes.none': '无进程',
+    'processes.connectFirst': '请先连接 Android 设备',
+    'processes.noMatching': '没有匹配的进程',
+    'apps.none': '无可用应用',
+    'apps.connectFirst': '请先连接 Android 设备',
+    'apps.noMatching': '没有匹配的应用',
+    'log.ready': 'EasyHook 已就绪。',
+    'log.runningTarget': '正在以{mode}模式运行目标：{target}',
+    'log.fridaStopped': 'Frida 会话已停止。',
+    'log.fridaDetached': 'Frida 会话已断开：{reason}',
+    'log.createdScript': '已创建新的未保存脚本。',
+    'log.loadedScripts': '已加载 {count} 个脚本。',
+    'log.refreshedScripts': '已刷新 {count} 个脚本。',
+    'log.savedScript': '已保存 {name}。',
+    'log.openedScript': '已打开 {name}。',
+    'log.devicesLoadError': '无法加载 Frida 设备。请运行 npm install 并检查 Frida 配置。',
+    'log.processesLoadError': '无法加载所选设备的进程列表。',
+    'log.appsLoadError': '无法从所选设备加载已安装的 Android 应用。',
+    'log.connectDeviceFirst': '请先连接并选择 Android USB 设备。',
+    'log.emptySpawnTarget': '启动目标为空。',
+    'log.emptyAttachTarget': '请先选择进程。',
+    'log.posted': '已发送：{payload}',
+    'log.unknownError': '未知错误。',
+    'log.fridaScriptError': 'Frida 脚本错误'
+  }
+};
 
 const initialSource = `send({
   event: 'loaded',
@@ -23,6 +165,7 @@ const state = {
   dirty: false,
   applications: [],
   devices: [],
+  language: DEFAULT_LANGUAGE,
   processes: [],
   scripts: [],
   running: false
@@ -35,6 +178,7 @@ const dom = {
   openFolderButton: document.querySelector('#openFolderButton'),
   saveScriptButton: document.querySelector('#saveScriptButton'),
   saveAsScriptButton: document.querySelector('#saveAsScriptButton'),
+  languageToggleButton: document.querySelector('#languageToggleButton'),
   refreshScriptsButton: document.querySelector('#refreshScriptsButton'),
   scriptSearchInput: document.querySelector('#scriptSearchInput'),
   scriptFolderPath: document.querySelector('#scriptFolderPath'),
@@ -65,14 +209,87 @@ const dom = {
   postMessageButton: document.querySelector('#postMessageButton')
 };
 
+function t(key, params = {}) {
+  const dictionary = translations[state.language] || translations[DEFAULT_LANGUAGE];
+  const fallback = translations[DEFAULT_LANGUAGE][key] || key;
+  const template = dictionary[key] || fallback;
+  return template.replace(/\{(\w+)\}/g, (_match, name) => {
+    return Object.prototype.hasOwnProperty.call(params, name) ? String(params[name]) : `{${name}}`;
+  });
+}
+
+function applyLanguage(options = {}) {
+  const rerenderDynamic = options.rerenderDynamic !== false;
+  document.documentElement.lang = state.language === 'zh' ? 'zh-CN' : 'en';
+
+  for (const element of document.querySelectorAll('[data-i18n]')) {
+    element.textContent = t(element.dataset.i18n);
+  }
+
+  for (const element of document.querySelectorAll('[data-i18n-title]')) {
+    element.title = t(element.dataset.i18nTitle);
+  }
+
+  for (const element of document.querySelectorAll('[data-i18n-placeholder]')) {
+    element.placeholder = t(element.dataset.i18nPlaceholder);
+  }
+
+  if (rerenderDynamic) {
+    updateLocalizedDynamicContent();
+  }
+}
+
+function toggleLanguage() {
+  state.language = state.language === 'en' ? 'zh' : 'en';
+  applyLanguage();
+}
+
+function updateLocalizedDynamicContent() {
+  if (!state.currentFolderPath) {
+    dom.scriptFolderPath.textContent = t('sidebar.noFolder');
+  }
+
+  updateEditorMeta();
+  updateFileHeader();
+  renderScriptList();
+  updateDeviceLanguageText();
+  rerenderSelectPreservingValue(dom.processSelect, renderProcessOptions);
+  rerenderSelectPreservingValue(dom.applicationSelect, renderApplicationOptions);
+}
+
+function rerenderSelectPreservingValue(select, renderOptions) {
+  const selectedValue = select.value;
+  renderOptions();
+
+  if (Array.from(select.options).some((option) => option.value === selectedValue)) {
+    select.value = selectedValue;
+  }
+}
+
+function setSelectMessage(select, message, options = {}) {
+  select.innerHTML = '';
+
+  const option = new Option(message, '');
+  if (options.disabled) {
+    option.disabled = true;
+  }
+  option.selected = true;
+  select.add(option);
+}
+
+function updateStatusText() {
+  dom.appStatus.textContent = state.running ? t('status.running') : state.dirty ? t('status.modified') : t('status.idle');
+}
+
 function boot() {
   dom.editor.value = initialSource;
   bindEvents();
   bindBridgeEvents();
+  applyLanguage({ rerenderDynamic: false });
   updateEditorMeta();
   updateFileHeader();
   refreshDevices();
-  log('info', 'EasyHook is ready.');
+  log('info', t('log.ready'));
 }
 
 function bindEvents() {
@@ -81,6 +298,7 @@ function bindEvents() {
   dom.openFolderButton.addEventListener('click', openFolder);
   dom.saveScriptButton.addEventListener('click', () => saveScript(false));
   dom.saveAsScriptButton.addEventListener('click', () => saveScript(true));
+  dom.languageToggleButton.addEventListener('click', toggleLanguage);
   dom.refreshScriptsButton.addEventListener('click', refreshScripts);
   dom.scriptSearchInput.addEventListener('input', renderScriptList);
   dom.editor.addEventListener('input', () => {
@@ -138,21 +356,26 @@ function bindBridgeEvents() {
       return;
     }
 
+    if (message.type === 'log') {
+      log(formatLogLevel(message.level), formatPayload(message.payload));
+      return;
+    }
+
     log('info', JSON.stringify(message, null, 2));
   });
 
   api.events.onFridaStatus((payload) => {
     setRunning(Boolean(payload.running));
     if (payload.running) {
-      log('success', `Running ${payload.targetMode} target: ${payload.target}`);
+      log('success', t('log.runningTarget', { mode: formatTargetModeForLog(payload.targetMode), target: payload.target }));
     } else {
-      log('warning', 'Frida session stopped.');
+      log('warning', t('log.fridaStopped'));
     }
   });
 
   api.events.onFridaDetached((payload) => {
     setRunning(false);
-    log('warning', `Frida session detached: ${payload.reason || 'unknown'}`);
+    log('warning', t('log.fridaDetached', { reason: payload.reason || t('common.unknown') }));
   });
 
   api.events.onMenuAction((action) => {
@@ -201,7 +424,7 @@ async function newScript() {
   dom.editor.value = initialSource;
   updateEditorMeta();
   updateFileHeader();
-  log('info', 'Created a new unsaved script.');
+  log('info', t('log.createdScript'));
 }
 
 async function openScript() {
@@ -223,7 +446,7 @@ async function openFolder() {
   state.scripts = result.scripts;
   dom.scriptFolderPath.textContent = result.folderPath;
   renderScriptList();
-  log('info', `Loaded ${result.scripts.length} script(s).`);
+  log('info', t('log.loadedScripts', { count: result.scripts.length }));
 }
 
 async function refreshScripts() {
@@ -234,7 +457,7 @@ async function refreshScripts() {
   const scripts = await unwrap(api.files.listScripts(state.currentFolderPath));
   state.scripts = scripts;
   renderScriptList();
-  log('info', `Refreshed ${scripts.length} script(s).`);
+  log('info', t('log.refreshedScripts', { count: scripts.length }));
 }
 
 async function saveScript(saveAs) {
@@ -253,7 +476,7 @@ async function saveScript(saveAs) {
   state.currentFilePath = result.filePath;
   state.dirty = false;
   updateFileHeader();
-  log('success', `Saved ${result.name}.`);
+  log('success', t('log.savedScript', { name: result.name }));
 
   if (state.currentFolderPath) {
     refreshScripts();
@@ -272,11 +495,11 @@ function loadScriptResult(result) {
   updateEditorMeta();
   updateFileHeader();
   renderScriptList();
-  log('info', `Opened ${result.name}.`);
+  log('info', t('log.openedScript', { name: result.name }));
 }
 
 async function refreshDevices() {
-  dom.deviceSelect.innerHTML = '<option value="">Loading...</option>';
+  setSelectMessage(dom.deviceSelect, t('common.loading'));
   const devices = await unwrap(api.frida.listDevices(), { logError: false });
 
   if (!devices) {
@@ -284,7 +507,7 @@ async function refreshDevices() {
     renderDeviceOptions();
     clearTargetLists();
     updateRunControls();
-    log('error', 'Unable to load Frida devices. Run npm install and check Frida setup.');
+    log('error', t('log.devicesLoadError'));
     return;
   }
 
@@ -297,12 +520,12 @@ function renderDeviceOptions() {
   dom.deviceSelect.innerHTML = '';
 
   if (state.devices.length === 0) {
-    const option = new Option('No Android USB device found', '');
+    const option = new Option(t('devices.none'), '');
     option.disabled = true;
     option.selected = true;
     dom.deviceSelect.add(option);
     dom.androidDeviceHint.classList.remove('ready');
-    dom.androidDeviceHint.textContent = 'No Android USB/tether device found. Start frida-server on the phone, confirm adb authorization, then click Refresh.';
+    dom.androidDeviceHint.textContent = t('devices.noneHint');
     return;
   }
 
@@ -313,7 +536,24 @@ function renderDeviceOptions() {
 
   dom.deviceSelect.selectedIndex = 0;
   dom.androidDeviceHint.classList.add('ready');
-  dom.androidDeviceHint.textContent = 'Android device selected. Attach to a running package or spawn an installed package.';
+  dom.androidDeviceHint.textContent = t('devices.readyHint');
+}
+
+function updateDeviceLanguageText() {
+  if (state.devices.length === 0) {
+    if (dom.deviceSelect.options.length === 0) {
+      setSelectMessage(dom.deviceSelect, t('devices.none'), { disabled: true });
+    } else if (dom.deviceSelect.options.length === 1 && dom.deviceSelect.options[0].value === '') {
+      dom.deviceSelect.options[0].textContent = t('devices.none');
+    }
+
+    dom.androidDeviceHint.classList.remove('ready');
+    dom.androidDeviceHint.textContent = t('devices.noneHint');
+    return;
+  }
+
+  dom.androidDeviceHint.classList.add('ready');
+  dom.androidDeviceHint.textContent = t('devices.readyHint');
 }
 
 async function refreshTargetList() {
@@ -334,13 +574,13 @@ async function refreshProcesses() {
     return;
   }
 
-  dom.processSelect.innerHTML = '<option value="">Loading...</option>';
+  setSelectMessage(dom.processSelect, t('common.loading'));
   const processes = await unwrap(api.frida.listProcesses(deviceId), { logError: false });
 
   if (!processes) {
     state.processes = [];
-    dom.processSelect.innerHTML = '<option value="">No processes</option>';
-    log('error', 'Unable to load process list for the selected device.');
+    setSelectMessage(dom.processSelect, t('processes.none'));
+    log('error', t('log.processesLoadError'));
     return;
   }
 
@@ -351,7 +591,7 @@ async function refreshProcesses() {
 function renderProcessOptions() {
   if (!getSelectedDeviceId()) {
     dom.processSelect.innerHTML = '';
-    dom.processSelect.add(new Option('Connect an Android device first', ''));
+    dom.processSelect.add(new Option(t('processes.connectFirst'), ''));
     return;
   }
 
@@ -366,7 +606,7 @@ function renderProcessOptions() {
   dom.processSelect.innerHTML = '';
 
   if (filtered.length === 0) {
-    dom.processSelect.add(new Option('No matching processes', ''));
+    dom.processSelect.add(new Option(t('processes.noMatching'), ''));
     return;
   }
 
@@ -383,13 +623,13 @@ async function refreshApplications() {
     return;
   }
 
-  dom.applicationSelect.innerHTML = '<option value="">Loading...</option>';
+  setSelectMessage(dom.applicationSelect, t('common.loading'));
   const applications = await unwrap(api.frida.listApplications(deviceId), { logError: false });
 
   if (!applications) {
     state.applications = [];
-    dom.applicationSelect.innerHTML = '<option value="">No apps available</option>';
-    log('error', 'Unable to load installed Android apps from the selected device.');
+    setSelectMessage(dom.applicationSelect, t('apps.none'));
+    log('error', t('log.appsLoadError'));
     return;
   }
 
@@ -400,7 +640,7 @@ async function refreshApplications() {
 function renderApplicationOptions() {
   if (!getSelectedDeviceId()) {
     dom.applicationSelect.innerHTML = '';
-    dom.applicationSelect.add(new Option('Connect an Android device first', ''));
+    dom.applicationSelect.add(new Option(t('apps.connectFirst'), ''));
     return;
   }
 
@@ -415,7 +655,7 @@ function renderApplicationOptions() {
   dom.applicationSelect.innerHTML = '';
 
   if (filtered.length === 0) {
-    dom.applicationSelect.add(new Option('No matching apps', ''));
+    dom.applicationSelect.add(new Option(t('apps.noMatching'), ''));
     return;
   }
 
@@ -437,7 +677,7 @@ function updateTargetMode() {
 async function runCurrentScript() {
   const deviceId = getSelectedDeviceId();
   if (!deviceId) {
-    log('error', 'Connect and select an Android USB device first.');
+    log('error', t('log.connectDeviceFirst'));
     return;
   }
 
@@ -445,7 +685,7 @@ async function runCurrentScript() {
   const target = targetMode === 'spawn' ? dom.spawnTargetInput.value.trim() : dom.processSelect.value;
 
   if (!target) {
-    log('error', targetMode === 'spawn' ? 'Spawn target is empty.' : 'Select a process first.');
+    log('error', targetMode === 'spawn' ? t('log.emptySpawnTarget') : t('log.emptyAttachTarget'));
     return;
   }
 
@@ -492,7 +732,7 @@ async function postMessageToScript() {
 
   const result = await unwrap(api.frida.post(payload));
   if (result) {
-    log('info', `Posted: ${formatPayload(payload)}`);
+    log('info', t('log.posted', { payload: formatPayload(payload) }));
     dom.postMessageInput.value = '';
   }
 }
@@ -500,7 +740,7 @@ async function postMessageToScript() {
 function setRunning(running) {
   state.running = running;
   updateRunControls();
-  dom.appStatus.textContent = running ? 'Running' : state.dirty ? 'Modified' : 'Idle';
+  updateStatusText();
 }
 
 function updateRunControls() {
@@ -534,7 +774,7 @@ function renderScriptList() {
   if (scripts.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'empty-state';
-    empty.textContent = state.currentFolderPath ? 'No scripts found.' : 'Open a folder to load scripts.';
+    empty.textContent = state.currentFolderPath ? t('sidebar.noScripts') : t('sidebar.openFolder');
     dom.scriptList.append(empty);
     return;
   }
@@ -561,18 +801,15 @@ function renderScriptList() {
 function updateEditorMeta() {
   const lines = dom.editor.value.length === 0 ? 1 : dom.editor.value.split('\n').length;
   const bytes = new Blob([dom.editor.value]).size;
-  dom.editorMeta.textContent = `${lines} lines / ${formatBytes(bytes)}`;
+  dom.editorMeta.textContent = t('editor.meta', { lines, bytes: formatBytes(bytes) });
   dom.lineNumbers.textContent = Array.from({ length: lines }, (_value, index) => String(index + 1)).join('\n');
 }
 
 function updateFileHeader() {
-  const name = state.currentFilePath ? getFileName(state.currentFilePath) : 'Untitled';
+  const name = state.currentFilePath ? getFileName(state.currentFilePath) : t('editor.untitled');
   dom.activeFileName.textContent = `${name}${state.dirty ? ' *' : ''}`;
-  dom.activeFilePath.textContent = state.currentFilePath || 'Unsaved script';
-
-  if (!state.running) {
-    dom.appStatus.textContent = state.dirty ? 'Modified' : 'Idle';
-  }
+  dom.activeFilePath.textContent = state.currentFilePath || t('editor.unsaved');
+  updateStatusText();
 }
 
 async function unwrap(promise, options = {}) {
@@ -582,7 +819,7 @@ async function unwrap(promise, options = {}) {
   }
 
   if (options.logError !== false) {
-    log('error', response.error ? response.error.message : 'Unknown error.');
+    log('error', response.error ? response.error.message : t('log.unknownError'));
   }
   return null;
 }
@@ -596,7 +833,7 @@ function log(type, message) {
 }
 
 function formatFridaError(message) {
-  const parts = [message.description || 'Frida script error'];
+  const parts = [message.description || t('log.fridaScriptError')];
   if (message.stack) {
     parts.push(message.stack);
   } else if (message.fileName) {
@@ -610,6 +847,32 @@ function formatPayload(payload) {
     return payload;
   }
   return JSON.stringify(payload, null, 2);
+}
+
+function formatTargetModeForLog(mode) {
+  if (state.language === 'zh') {
+    if (mode === 'attach') {
+      return t('target.attach');
+    }
+
+    if (mode === 'spawn') {
+      return t('target.spawn');
+    }
+  }
+
+  return mode;
+}
+
+function formatLogLevel(level) {
+  if (level === 'warning') {
+    return 'warning';
+  }
+
+  if (level === 'error') {
+    return 'error';
+  }
+
+  return 'info';
 }
 
 function getFileName(filePath) {

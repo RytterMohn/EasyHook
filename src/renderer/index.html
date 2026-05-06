@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,21 +17,35 @@
           </div>
         </div>
         <div class="toolbar">
-          <button id="newScriptButton" type="button">New</button>
-          <button id="openScriptButton" type="button">Open</button>
-          <button id="openFolderButton" type="button">Folder</button>
-          <button id="saveScriptButton" type="button">Save</button>
-          <button id="saveAsScriptButton" type="button">Save As</button>
+          <button id="newScriptButton" type="button" data-i18n="toolbar.new">New</button>
+          <button id="openScriptButton" type="button" data-i18n="toolbar.open">Open</button>
+          <button id="openFolderButton" type="button" data-i18n="toolbar.folder">Folder</button>
+          <button id="saveScriptButton" type="button" data-i18n="toolbar.save">Save</button>
+          <button id="saveAsScriptButton" type="button" data-i18n="toolbar.saveAs">Save As</button>
+          <button
+            id="languageToggleButton"
+            type="button"
+            title="Switch to Chinese"
+            data-i18n="language.button"
+            data-i18n-title="language.buttonTitle"
+          >中文</button>
         </div>
       </header>
 
       <main class="workspace">
         <aside class="sidebar">
           <div class="panel-header">
-            <h2>Scripts</h2>
-            <button id="refreshScriptsButton" class="icon-button" type="button" title="Refresh scripts">Refresh</button>
+            <h2 data-i18n="sidebar.scripts">Scripts</h2>
+            <button
+              id="refreshScriptsButton"
+              class="icon-button"
+              type="button"
+              title="Refresh scripts"
+              data-i18n="common.refresh"
+              data-i18n-title="sidebar.refreshTitle"
+            >Refresh</button>
           </div>
-          <input id="scriptSearchInput" class="input" type="search" placeholder="Search scripts" />
+          <input id="scriptSearchInput" class="input" type="search" placeholder="Search scripts" data-i18n-placeholder="sidebar.searchPlaceholder" />
           <div id="scriptFolderPath" class="muted path-label">No folder selected</div>
           <div id="scriptList" class="script-list"></div>
         </aside>
@@ -53,70 +67,70 @@
         <aside class="run-panel">
           <section class="run-card">
             <div class="panel-header">
-              <h2>Target</h2>
-              <button id="refreshDevicesButton" type="button">Refresh</button>
+              <h2 data-i18n="target.title">Target</h2>
+              <button id="refreshDevicesButton" type="button" data-i18n="common.refresh">Refresh</button>
             </div>
 
             <label class="field">
-              <span>Android device</span>
+              <span data-i18n="target.androidDevice">Android device</span>
               <select id="deviceSelect"></select>
             </label>
-            <div id="androidDeviceHint" class="setup-note">
+            <div id="androidDeviceHint" class="setup-note" data-i18n="target.initialHint">
               Connect an Android device, start frida-server, then click Refresh.
             </div>
 
             <label class="field">
-              <span>Mode</span>
+              <span data-i18n="target.mode">Mode</span>
               <select id="targetModeSelect">
-                <option value="attach">Attach</option>
-                <option value="spawn">Spawn</option>
+                <option value="attach" data-i18n="target.attach">Attach</option>
+                <option value="spawn" data-i18n="target.spawn">Spawn</option>
               </select>
             </label>
 
             <label class="field" id="processField">
-              <span>Running Android process</span>
-              <input id="processSearchInput" class="input" type="search" placeholder="Filter package or PID" />
+              <span data-i18n="target.process">Running Android process</span>
+              <input id="processSearchInput" class="input" type="search" placeholder="Filter package or PID" data-i18n-placeholder="target.processPlaceholder" />
               <select id="processSelect" size="8"></select>
             </label>
 
             <label class="field hidden" id="spawnField">
-              <span>Android package</span>
+              <span data-i18n="target.package">Android package</span>
               <input id="spawnTargetInput" class="input" type="text" placeholder="com.example.app" />
             </label>
 
             <label class="field hidden" id="applicationField">
-              <span>Installed apps</span>
-              <input id="applicationSearchInput" class="input" type="search" placeholder="Filter installed apps" />
+              <span data-i18n="target.apps">Installed apps</span>
+              <input id="applicationSearchInput" class="input" type="search" placeholder="Filter installed apps" data-i18n-placeholder="target.appsPlaceholder" />
               <select id="applicationSelect" size="6"></select>
             </label>
 
             <label class="field">
-              <span>Runtime</span>
+              <span data-i18n="target.runtime">Runtime</span>
               <select id="runtimeSelect">
-                <option value="default">Default</option>
+                <option value="default" data-i18n="target.defaultRuntime">Default</option>
                 <option value="qjs">QuickJS</option>
                 <option value="v8">V8</option>
               </select>
             </label>
 
             <div class="run-actions">
-              <button id="runButton" class="primary" type="button">Run</button>
-              <button id="stopButton" class="danger" type="button" disabled>Stop</button>
-            </div>
-          </section>
-
-          <section class="run-card log-card">
-            <div class="panel-header">
-              <h2>Console</h2>
-              <button id="clearLogButton" type="button">Clear</button>
-            </div>
-            <div id="logOutput" class="log-output" role="log" aria-live="polite"></div>
-            <div class="post-row">
-              <input id="postMessageInput" class="input" type="text" placeholder='{"type":"ping"}' />
-              <button id="postMessageButton" type="button" disabled>Post</button>
+              <button id="runButton" class="primary" type="button" data-i18n="run.run">Run</button>
+              <button id="stopButton" class="danger" type="button" disabled data-i18n="run.stop">Stop</button>
             </div>
           </section>
         </aside>
+
+        <section class="run-card log-card console-panel">
+          <div class="panel-header">
+            <h2 data-i18n="console.title">Console</h2>
+            <button id="clearLogButton" type="button" data-i18n="console.clear">Clear</button>
+          </div>
+          <div id="logOutput" class="log-output" role="log" aria-live="polite"></div>
+          <div class="post-row">
+            <input id="postMessageInput" class="input" type="text" placeholder='{"type":"ping"}' />
+            <button id="postMessageButton" type="button" disabled data-i18n="console.post">Post</button>
+          </div>
+        </section>
       </main>
     </div>
 

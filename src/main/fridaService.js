@@ -119,6 +119,18 @@ class FridaService {
       }
 
       sessionState.script = await sessionState.session.createScript(normalized.source, scriptOptions);
+      sessionState.script.logHandler = (level, text) => {
+        this.emit('frida:message', {
+          message: {
+            type: 'log',
+            level,
+            payload: text
+          },
+          data: null,
+          at: new Date().toISOString()
+        });
+      };
+
       sessionState.script.message.connect((message, data) => {
         this.emit('frida:message', {
           message,
